@@ -236,18 +236,25 @@ func Test_detectLogLevelFromLogEntry(t *testing.T) {
 			expectedLogLevel: constants.LogLevelCritical,
 		},
 		{
-			name: "json log line with an warning",
+			name: "json log line with a warning",
 			entry: logproto.Entry{
 				Line: `{"foo":"bar","msg":"message with keyword warn but it should not get picked up","level":"warn"}`,
 			},
 			expectedLogLevel: constants.LogLevelWarn,
 		},
 		{
-			name: "json log line with an warning",
+			name: "json log line with a warning",
 			entry: logproto.Entry{
 				Line: `{"foo":"bar","msg":"message with keyword warn but it should not get picked up","SEVERITY":"FATAL"}`,
 			},
 			expectedLogLevel: constants.LogLevelFatal,
+		},
+		{
+			name: "json log line with information",
+			entry: logproto.Entry{
+				Line: `{"foo":"bar","msg":"message with keyword information but it should not get picked up","level":"warn"}`,
+			},
+			expectedLogLevel: constants.LogLevelWarn,
 		},
 		{
 			name: "json log line with an error in block case",
