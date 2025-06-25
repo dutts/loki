@@ -21,19 +21,20 @@ import (
 )
 
 var (
-	traceBytes = []byte("trace")
-	traceAbbrv = []byte("trc")
-	debug      = []byte("debug")
-	debugAbbrv = []byte("dbg")
-	info       = []byte("info")
-	infoAbbrv  = []byte("inf")
-	warn       = []byte("warn")
-	warnAbbrv  = []byte("wrn")
-	warning    = []byte("warning")
-	errorStr   = []byte("error")
-	errorAbbrv = []byte("err")
-	critical   = []byte("critical")
-	fatal      = []byte("fatal")
+	traceBytes  = []byte("trace")
+	traceAbbrv  = []byte("trc")
+	debug       = []byte("debug")
+	debugAbbrv  = []byte("dbg")
+	info        = []byte("info")
+	infoAbbrv   = []byte("inf")
+	information = []byte("information")
+	warn        = []byte("warn")
+	warnAbbrv   = []byte("wrn")
+	warning     = []byte("warning")
+	errorStr    = []byte("error")
+	errorAbbrv  = []byte("err")
+	critical    = []byte("critical")
+	fatal       = []byte("fatal")
 
 	defaultAllowedLevelFields = []string{
 		"level",
@@ -200,7 +201,7 @@ func (l *FieldDetector) extractLogLevelFromLogLine(log string) string {
 		return constants.LogLevelTrace
 	case bytes.EqualFold(v, debug), bytes.EqualFold(v, debugAbbrv):
 		return constants.LogLevelDebug
-	case bytes.EqualFold(v, info), bytes.EqualFold(v, infoAbbrv):
+	case bytes.EqualFold(v, info), bytes.EqualFold(v, infoAbbrv), bytes.EqualFold(v, information):
 		return constants.LogLevelInfo
 	case bytes.EqualFold(v, warn), bytes.EqualFold(v, warnAbbrv), bytes.EqualFold(v, warning):
 		return constants.LogLevelWarn
@@ -315,7 +316,8 @@ func isJSON(line string) bool {
 
 func detectLevelFromLogLine(log string) string {
 	if strings.Contains(log, "info:") || strings.Contains(log, "INFO:") ||
-		strings.Contains(log, "info") || strings.Contains(log, "INFO") {
+		strings.Contains(log, "info") || strings.Contains(log, "INFO") ||
+	        strings.Contains(log, "information") {
 		return constants.LogLevelInfo
 	}
 	if strings.Contains(log, "err:") || strings.Contains(log, "ERR:") ||
